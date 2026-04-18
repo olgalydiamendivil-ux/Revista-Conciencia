@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reportes</title>
+</head>
+<body>
+
+<h1>Reportes de Accidentes</h1>
+<ul id="lista"></ul>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAL7n_6pBJaOsF9f4aFlReu9CBTw0HcYOw",
+  authDomain: "revista-motos.firebaseapp.com",
+  projectId: "revista-motos",
+  storageBucket: "revista-motos.firebasestorage.app",
+  messagingSenderId: "554552666157",
+  appId: "1:554552666157:web:5ca3ad332829931436f0a4",
+  measurementId: "G-FR9LC1BCGB"
+};
+
+// 🔥 ESTO ES LO QUE TE FALTABA
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const lista = document.getElementById("lista");
+
+// ⚠️ RESPETA MAYÚSCULA (Reportes)
+const querySnapshot = await getDocs(collection(db, "Reportes"));
+
+querySnapshot.forEach((doc) => {
+  const data = doc.data();
+  
+  const li = document.createElement("li");
+
+  li.textContent = 
+    "Edad: " + data.Edad + 
+    " | Tipo: " + data.Tipo_Incidente + 
+    " | Lugar: " + data.Ubicación;
+
+  lista.appendChild(li);
+});
+
+</script>
+
+</body>
+</html>g
