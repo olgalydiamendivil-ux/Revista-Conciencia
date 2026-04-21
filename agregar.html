@@ -49,8 +49,8 @@
   📅 Fecha del accidente:
   <input type="date" id="fecha" required>
 
-  🔗 Link de evidencia:
-  <input type="url" id="link" placeholder="https://..." required>
+  🔗 Link de evidencia (opcional):
+  <input type="url" id="link" placeholder="https://...">
 
   <br><br>
   <button type="submit">Guardar Reporte</button>
@@ -90,10 +90,10 @@ document.getElementById("formulario").addEventListener("submit", async (e) => {
     Fecha_Accidente: document.getElementById("fecha").value,
     Fecha_Registro: serverTimestamp(),
 
-    Link: link
+    Link: link || null
   });
 
-  alert("✅ Reporte guardado correctamente");
+  alert("✅ Reporte guardado");
   document.getElementById("formulario").reset();
 });
 
