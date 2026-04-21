@@ -2,16 +2,35 @@
 <html>
 <head>
   <title>Reportes</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: #0077b6;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
 
 <h1>Reportes de Accidentes</h1>
-<ul id="lista"></ul>
+<div id="lista"></div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAL7n_6pBJaOsF9f4aFlReu9CBTw0HcYOw",
@@ -27,14 +46,16 @@ const db = getFirestore(app);
 
 const lista = document.getElementById("lista");
 
-const querySnapshot = await getDocs(collection(db, "Reportes"));
+const q = query(collection(db, "Reportes"), orderBy("Fecha_Accidente", "desc"));
+const querySnapshot = await getDocs(q);
 
 querySnapshot.forEach((doc) => {
   const data = doc.data();
 
-  const li = document.createElement("li");
+  const div = document.createElement("div");
+  div.className = "card";
 
-  li.innerHTML = `
+  div.innerHTML = `
     <strong>Edad:</strong> ${data.Edad} <br>
     <strong>Usa casco:</strong> ${data.Usa_Casco} <br>
     <strong>Exceso de velocidad:</strong> ${data.Exceso_Velocidad} <br>
@@ -42,14 +63,17 @@ querySnapshot.forEach((doc) => {
     <strong>Lesiones:</strong> ${data.Lesiones} <br>
     <strong>Ubicación:</strong> ${data.Ubicación} <br>
 
-    <a href="${data.Link}" target="_blank" style="color: blue; font-weight: bold;">
-      🔎 Ver evidencia
-    </a>
+    <strong>Fecha del accidente:</strong> ${data.Fecha_Accidente} <br>
+    <strong>Fecha de registro:</strong> ${data.Fecha_Registro?.toDate().toLocaleDateString()} <br>
 
-    <hr>
+    ${
+      data.Link 
+      ? `<a href="${data.Link}" target="_blank" class="btn">🔎 Ver evidencia</a>`
+      : `<span>❌ Sin evidencia</span>`
+    }
   `;
 
-  lista.appendChild(li);
+  lista.appendChild(div);
 });
 
 </script>
