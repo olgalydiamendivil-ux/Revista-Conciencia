@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Reportes</title>
@@ -13,6 +14,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+// 🔴 TU CONFIGURACIÓN (YA CORRECTA)
 const firebaseConfig = {
   apiKey: "AIzaSyAL7n_6pBJaOsF9f4aFlReu9CBTw0HcYOw",
   authDomain: "revista-motos.firebaseapp.com",
@@ -23,24 +25,32 @@ const firebaseConfig = {
   measurementId: "G-FR9LC1BCGB"
 };
 
-// 🔥 ESTO ES LO QUE TE FALTABA
+// 🔥 INICIALIZAR FIREBASE
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// 🔥 OBTENER LISTA HTML
 const lista = document.getElementById("lista");
 
-// ⚠️ RESPETA MAYÚSCULA (Reportes)
+// 🔥 CONSULTAR COLECCIÓN (RESPETA MAYÚSCULA)
 const querySnapshot = await getDocs(collection(db, "Reportes"));
 
+// 🔥 RECORRER DATOS
 querySnapshot.forEach((doc) => {
   const data = doc.data();
-  
+
   const li = document.createElement("li");
 
-  li.textContent = 
-    "Edad: " + data.Edad + 
-    " | Tipo: " + data.Tipo_Incidente + 
-    " | Lugar: " + data.Ubicación;
+  // 💥 FORMATO BONITO
+  li.innerHTML = `
+    <strong>Edad:</strong> ${data.Edad} <br>
+    <strong>Usa casco:</strong> ${data.Usa_Casco} <br>
+    <strong>Exceso de velocidad:</strong> ${data.Exceso_Velocidad} <br>
+    <strong>Tipo de incidente:</strong> ${data.Tipo_Incidente} <br>
+    <strong>Lesiones:</strong> ${data.Lesiones} <br>
+    <strong>Ubicación:</strong> ${data.Ubicación}
+    <hr>
+  `;
 
   lista.appendChild(li);
 });
@@ -48,4 +58,4 @@ querySnapshot.forEach((doc) => {
 </script>
 
 </body>
-</html>g
+</html>
