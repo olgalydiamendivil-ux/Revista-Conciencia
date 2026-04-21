@@ -31,6 +31,9 @@
   Ubicación:
   <input type="text" id="ubicacion"><br><br>
 
+  🔗 Link de evidencia:
+  <input type="text" id="link"><br><br>
+
   <button type="submit">Guardar</button>
 </form>
 
@@ -60,10 +63,11 @@ document.getElementById("formulario").addEventListener("submit", async (e) => {
     Exceso_Velocidad: document.getElementById("velocidad").value,
     Tipo_Incidente: document.getElementById("tipo").value,
     Lesiones: document.getElementById("lesiones").value,
-    Ubicación: document.getElementById("ubicacion").value
+    Ubicación: document.getElementById("ubicacion").value,
+    Link: document.getElementById("link").value
   });
 
-  alert("Reporte guardado");
+  alert("Reporte guardado correctamente");
 });
 </script>
 
