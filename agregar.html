@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agregar Reporte</title>
+</head>
+<body>
+
+<h1>Agregar Reporte de Accidente</h1>
+
+<form id="formulario">
+  Edad: <input type="number" id="edad"><br><br>
+
+  Usa casco:
+  <select id="casco">
+    <option value="si">Sí</option>
+    <option value="no">No</option>
+  </select><br><br>
+
+  Exceso de velocidad:
+  <select id="velocidad">
+    <option value="si">Sí</option>
+    <option value="no">No</option>
+  </select><br><br>
+
+  Tipo de incidente:
+  <input type="text" id="tipo"><br><br>
+
+  Lesiones:
+  <input type="text" id="lesiones"><br><br>
+
+  Ubicación:
+  <input type="text" id="ubicacion"><br><br>
+
+  <button type="submit">Guardar</button>
+</form>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAL7n_6pBJaOsF9f4aFlReu9CBTw0HcYOw",
+  authDomain: "revista-motos.firebaseapp.com",
+  projectId: "revista-motos",
+  storageBucket: "revista-motos.firebasestorage.app",
+  messagingSenderId: "554552666157",
+  appId: "1:554552666157:web:5ca3ad332829931436f0a4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+document.getElementById("formulario").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  await addDoc(collection(db, "Reportes"), {
+    Edad: parseInt(document.getElementById("edad").value),
+    Usa_Casco: document.getElementById("casco").value,
+    Exceso_Velocidad: document.getElementById("velocidad").value,
+    Tipo_Incidente: document.getElementById("tipo").value,
+    Lesiones: document.getElementById("lesiones").value,
+    Ubicación: document.getElementById("ubicacion").value
+  });
+
+  alert("Reporte guardado");
+});
+</script>
+
+</body>
+</html>
