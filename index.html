@@ -20,6 +20,7 @@
       border-radius: 5px;
       text-decoration: none;
     }
+    .btn:hover { background: #023e8a; }
   </style>
 </head>
 <body>
@@ -63,13 +64,17 @@ querySnapshot.forEach((doc) => {
     <strong>Lesiones:</strong> ${data.Lesiones} <br>
     <strong>Ubicación:</strong> ${data.Ubicación} <br>
 
-    <strong>Fecha del accidente:</strong> ${data.Fecha_Accidente} <br>
-    <strong>Fecha de registro:</strong> ${data.Fecha_Registro?.toDate().toLocaleDateString()} <br>
+    <strong>Fecha del accidente:</strong> ${data.Fecha_Accidente || "No disponible"} <br>
+    <strong>Fecha de registro:</strong> ${
+      data.Fecha_Registro 
+        ? data.Fecha_Registro.toDate().toLocaleDateString() 
+        : "No disponible"
+    } <br>
 
     ${
       data.Link 
-      ? `<a href="${data.Link}" target="_blank" class="btn">🔎 Ver evidencia</a>`
-      : `<span>❌ Sin evidencia</span>`
+        ? `<a href="${data.Link}" target="_blank" class="btn">🔎 Ver evidencia</a>`
+        : `<span>❌ Sin evidencia</span>`
     }
   `;
 
